@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Geosynthetic - Connexion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <div class="auth-container">
+        <div class="login-card">
+            <div class="logo-area">
+                <img src="{{ url_for('static', filename='logo.png') }}" class="main-logo" alt="Logo">
+                <h2>Smart Geosynthetic</h2>
+            </div>
+            <p class="subtitle text-center">Plateforme Intelligente de Conception des Fondations SGR</p>
+
+            <!-- Login Tab / Register Tab -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('login')">
+                    <i class="fa-solid fa-right-to-bracket"></i> Connexion
+                </button>
+                <button class="auth-tab" onclick="switchTab('register')">
+                    <i class="fa-solid fa-user-plus"></i> Inscription
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form">
+                <div class="input-group">
+                    <label>Adresse Email</label>
+                    <input type="email" id="login-email" placeholder="exemple@universite.dz" required>
+                </div>
+                <div class="input-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fa-solid fa-right-to-bracket"></i> Se Connecter
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form hidden">
+                <div class="input-group">
+                    <label>Nom d'utilisateur</label>
+                    <input type="text" id="reg-username" placeholder="Ahmed" required>
+                </div>
+                <div class="input-group">
+                    <label>Adresse Email</label>
+                    <input type="email" id="reg-email" placeholder="exemple@universite.dz" required>
+                </div>
+                <div class="input-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="reg-password" placeholder="••••••••" minlength="4" required>
+                </div>
+                <button type="submit" class="btn-signup-form">
+                    <i class="fa-solid fa-user-plus"></i> Créer un Compte
+                </button>
+            </form>
+
+            <div id="auth-error" class="auth-error hidden"></div>
+
+            <div class="login-footer">
+                <p>Développé dans le cadre d'un mémoire de Master - Algérie 🇩🇿</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const tabs = document.querySelectorAll('.auth-tab');
+            const errorBox = document.getElementById('auth-error');
+            errorBox.classList.add('hidden');
+
+            tabs.forEach(t => t.classList.remove('active'));
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                tabs[0].classList.add('active');
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                tabs[1].classList.add('active');
+            }
+        }
+
+        function showError(msg) {
+            const errorBox = document.getElementById('auth-error');
+            errorBox.textContent = msg;
+            errorBox.classList.remove('hidden');
+        }
+
+        // Login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email, password})
+                });
+                const data = await res.json();
+                if (data.success) {
+                    window.location.href = '/';
+                } else {
+                    showError(data.message);
+                }
+            } catch(err) {
+                showError('Erreur de connexion au serveur.');
+            }
+        });
+
+        // Register
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            try {
+                const res = await fetch('/register', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({username, email, password})
+                });
+                const data = await res.json();
+                if (data.success) {
+                    window.location.href = '/';
+                } else {
+                    showError(data.message);
+                }
+            } catch(err) {
+                showError('Erreur de connexion au serveur.');
+            }
+        });
+    </script>
+</body>
+</html>

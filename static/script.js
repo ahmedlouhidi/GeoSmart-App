@@ -1,17 +1,3 @@
-// Handle Login / Logout
-document.getElementById('login-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    // Simulate successful login
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('app-content').classList.remove('hidden');
-});
-
-function logout() {
-    document.getElementById('app-content').classList.add('hidden');
-    document.getElementById('login-screen').classList.remove('hidden');
-    document.getElementById('login-form').reset();
-}
-
 let global_grs_data = null;
 
 document.getElementById('form-module1').addEventListener('submit', async (e) => {
@@ -84,7 +70,10 @@ function displayModule1Result(data) {
                 Déficit de capacité: ${data.deficit.toFixed(2)} kPa.<br>
                 Un renforcement (SGR) est nécessaire.
             </div>
-        </div>`;
+        </div>
+        <button class="btn-pdf" onclick="alert('Fonctionnalité en cours de développement : Génération et téléchargement du rapport PDF.')">
+            <i class="fa-solid fa-file-pdf"></i> Télécharger le Rapport PDF
+        </button>`;
     } else {
         html += `
         <div class="alert alert-success">
@@ -94,7 +83,7 @@ function displayModule1Result(data) {
                 Aucun renforcement n'est requis. La conception est complète.
             </div>
         </div>
-        <button class="btn-pdf" onclick="alert('Fonctionnalité en cours de développement : Génération et téléchargement du rapport complet en PDF.')">
+        <button class="btn-pdf" onclick="alert('Fonctionnalité en cours de développement : Génération et téléchargement du rapport PDF.')">
             <i class="fa-solid fa-file-pdf"></i> Télécharger le Rapport PDF
         </button>`;
     }
@@ -190,7 +179,7 @@ function displayModule3Result(data) {
     }
 
     html += `
-    <button class="btn-pdf" onclick="alert('Fonctionnalité en cours de développement : Génération et téléchargement du rapport complet en PDF avec graphiques IA.')">
+    <button class="btn-pdf" onclick="alert('Fonctionnalité en cours de développement : Génération et téléchargement du rapport PDF avec graphiques IA.')">
         <i class="fa-solid fa-file-pdf"></i> Télécharger le Rapport PDF
     </button>`;
 

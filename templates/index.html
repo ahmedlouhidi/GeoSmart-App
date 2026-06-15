@@ -7,57 +7,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
 <body>
     <div class="background-animation"></div>
 
-    <!-- Login Screen -->
-    <div id="login-screen" class="login-overlay">
-        <div class="login-card">
+    <nav class="top-navbar">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="nav-logo-img">
+                <span class="nav-brand">Smart Geosynthetic</span>
+            </div>
+            <div class="nav-auth">
+                <span class="nav-user"><i class="fa-solid fa-user-circle"></i> {{ current_user.username }}</span>
+                {% if current_user.is_admin %}
+                <a href="/admin" class="btn-admin-link"><i class="fa-solid fa-shield-halved"></i> Admin</a>
+                {% endif %}
+                <a href="/logout" class="btn-login"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
             <div class="logo-area">
                 <img src="{{ url_for('static', filename='logo.png') }}" class="main-logo" alt="Logo Smart Geosynthetic">
-                <h2>Bienvenue sur Smart Geosynthetic</h2>
+                <h1>Smart Geosynthetic</h1>
             </div>
-            <p class="subtitle text-center">Veuillez vous connecter pour accéder à l'espace de calcul</p>
-            
-            <form id="login-form" class="login-form">
-                <div class="input-group">
-                    <label>Adresse Email</label>
-                    <input type="email" placeholder="professeur@universite.dz" required>
-                </div>
-                <div class="input-group">
-                    <label>Mot de passe</label>
-                    <input type="password" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="btn-primary" style="margin-top: 1rem;">
-                    <i class="fa-solid fa-right-to-bracket"></i> Se Connecter
-                </button>
-                <div class="login-footer">
-                    <p>Pas encore de compte ? <a href="#" onclick="alert('Module d\'inscription en cours de développement')">Créer un compte</a></p>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Main App Content (Hidden by default) -->
-    <div id="app-content" class="hidden">
-        <nav class="top-navbar">
-            <div class="nav-content">
-                <div class="nav-logo">
-                    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="nav-logo-img">
-                    <span class="nav-brand">Smart Geosynthetic</span>
-                </div>
-                <div class="nav-auth">
-                    <button class="btn-login" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</button>
-                </div>
-            </div>
-        </nav>
-
-        <div class="container">
-            <header>
-                <div class="logo-area">
-                    <img src="{{ url_for('static', filename='logo.png') }}" class="main-logo" alt="Logo Smart Geosynthetic">
-                    <h1>Smart Geosynthetic</h1>
-                </div>
             <p class="subtitle">Plateforme Intelligente de Conception des Fondations SGR</p>
         </header>
 
@@ -109,9 +84,7 @@
                     </button>
                 </form>
 
-                <div id="result-module1" class="result-area hidden">
-                    <!-- Injected by JS -->
-                </div>
+                <div id="result-module1" class="result-area hidden"></div>
             </section>
 
             <!-- MODULE 3: SGR Optimization -->
@@ -143,17 +116,14 @@
                     <p>L'IA analyse des milliers de configurations (Algorithme Évolutionnaire)...</p>
                 </div>
 
-                <div id="result-module3" class="result-area hidden">
-                    <!-- Injected by JS -->
-                </div>
+                <div id="result-module3" class="result-area hidden"></div>
             </section>
-
         </main>
         
         <footer>
             <p>Développé dans le cadre d'un mémoire de Master (Loi 1275) - Algérie.</p>
         </footer>
-    </div> <!-- End app-content -->
+    </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Geosynthetic - Administration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <nav class="top-navbar">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="nav-logo-img">
+                <span class="nav-brand">Smart Geosynthetic</span>
+            </div>
+            <div class="nav-auth">
+                <a href="/" class="btn-login"><i class="fa-solid fa-house"></i> Accueil</a>
+                <a href="/logout" class="btn-login"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <i class="fa-solid fa-shield-halved logo-icon" style="color: #e11d48;"></i>
+                <h1 style="background: linear-gradient(to right, #e11d48, #f8fafc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Panneau d'Administration</h1>
+            </div>
+            <p class="subtitle">Gérer les comptes utilisateurs de la plateforme</p>
+        </header>
+
+        <section class="module-card">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-users"></i> Utilisateurs Enregistrés ({{ users|length }})</h2>
+            </div>
+
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr id="user-row-{{ user.id }}">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if user.is_admin %}
+                                <span class="badge badge-admin"><i class="fa-solid fa-crown"></i> Admin</span>
+                                {% else %}
+                                <span class="badge badge-user"><i class="fa-solid fa-user"></i> Utilisateur</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.is_admin %}
+                                <span class="text-muted">—</span>
+                                {% else %}
+                                <button class="btn-delete" onclick="deleteUser({{ user.id }}, '{{ user.username }}')">
+                                    <i class="fa-solid fa-trash"></i> Supprimer
+                                </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <p>Développé dans le cadre d'un mémoire de Master (Loi 1275) - Algérie.</p>
+        </footer>
+    </div>
+
+    <script>
+        async function deleteUser(userId, username) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer le compte de "' + username + '" ?')) return;
+            
+            try {
+                const res = await fetch('/admin/delete/' + userId, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = await res.json();
+                if (data.success) {
+                    const row = document.getElementById('user-row-' + userId);
+                    row.style.transition = 'opacity 0.5s';
+                    row.style.opacity = '0';
+                    setTimeout(() => row.remove(), 500);
+                } else {
+                    alert('Erreur: ' + data.message);
+                }
+            } catch(err) {
+                alert('Erreur de connexion au serveur.');
+            }
+        }
+    </script>
+</body>
+</html>
