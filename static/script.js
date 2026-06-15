@@ -1,3 +1,17 @@
+// Handle Login / Logout
+document.getElementById('login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Simulate successful login
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('app-content').classList.remove('hidden');
+});
+
+function logout() {
+    document.getElementById('app-content').classList.add('hidden');
+    document.getElementById('login-screen').classList.remove('hidden');
+    document.getElementById('login-form').reset();
+}
+
 let global_grs_data = null;
 
 document.getElementById('form-module1').addEventListener('submit', async (e) => {

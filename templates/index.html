@@ -7,29 +7,57 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
 <body>
     <div class="background-animation"></div>
 
-    <nav class="top-navbar">
-        <div class="nav-content">
-            <div class="nav-logo">
-                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="nav-logo-img">
-                <span class="nav-brand">Smart Geosynthetic</span>
-            </div>
-            <div class="nav-auth">
-                <button class="btn-login" onclick="alert('Module d\'authentification en cours de développement pour la version future.')"><i class="fa-solid fa-user"></i> Connexion</button>
-                <button class="btn-signup" onclick="alert('Module d\'authentification en cours de développement pour la version future.')"><i class="fa-solid fa-user-plus"></i> Inscription</button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <header>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-overlay">
+        <div class="login-card">
             <div class="logo-area">
                 <img src="{{ url_for('static', filename='logo.png') }}" class="main-logo" alt="Logo Smart Geosynthetic">
-                <h1>Smart Geosynthetic</h1>
+                <h2>Bienvenue sur Smart Geosynthetic</h2>
             </div>
+            <p class="subtitle text-center">Veuillez vous connecter pour accéder à l'espace de calcul</p>
+            
+            <form id="login-form" class="login-form">
+                <div class="input-group">
+                    <label>Adresse Email</label>
+                    <input type="email" placeholder="professeur@universite.dz" required>
+                </div>
+                <div class="input-group">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top: 1rem;">
+                    <i class="fa-solid fa-right-to-bracket"></i> Se Connecter
+                </button>
+                <div class="login-footer">
+                    <p>Pas encore de compte ? <a href="#" onclick="alert('Module d\'inscription en cours de développement')">Créer un compte</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Content (Hidden by default) -->
+    <div id="app-content" class="hidden">
+        <nav class="top-navbar">
+            <div class="nav-content">
+                <div class="nav-logo">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="nav-logo-img">
+                    <span class="nav-brand">Smart Geosynthetic</span>
+                </div>
+                <div class="nav-auth">
+                    <button class="btn-login" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Déconnexion</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <header>
+                <div class="logo-area">
+                    <img src="{{ url_for('static', filename='logo.png') }}" class="main-logo" alt="Logo Smart Geosynthetic">
+                    <h1>Smart Geosynthetic</h1>
+                </div>
             <p class="subtitle">Plateforme Intelligente de Conception des Fondations SGR</p>
         </header>
 
@@ -125,7 +153,7 @@
         <footer>
             <p>Développé dans le cadre d'un mémoire de Master (Loi 1275) - Algérie.</p>
         </footer>
-    </div>
+    </div> <!-- End app-content -->
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
