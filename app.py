@@ -20,7 +20,6 @@ login_manager.login_view = 'auth'
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
@@ -31,13 +30,13 @@ def load_user(user_id):
 # ─── Create DB and Admin Account ───
 with app.app_context():
     db.create_all()
-    admin = User.query.filter_by(email='admin@geosmart.com').first()
+    admin = User.query.filter_by(username='admin').first()
     if not admin:
         hashed_pw = bcrypt.generate_password_hash('admin123').decode('utf-8')
-        admin = User(username='Admin', email='admin@geosmart.com', password=hashed_pw, is_admin=True)
+        admin = User(username='admin', password=hashed_pw, is_admin=True)
         db.session.add(admin)
         db.session.commit()
-        print("Admin account created: admin@geosmart.com / admin123")
+        print("Admin account created: admin / admin123")
 
 # ─── Auth Page (Login + Register) ───
 @app.route('/auth')
@@ -49,34 +48,30 @@ def auth():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
-    email = data.get('email', '').strip()
+    username = data.get('username', '').strip()
     password = data.get('password', '')
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(username=username).first()
     if user and bcrypt.check_password_hash(user.password, password):
         login_user(user)
         return jsonify({'success': True, 'is_admin': user.is_admin})
     else:
-        return jsonify({'success': False, 'message': 'Email ou mot de passe incorrect.'})
+        return jsonify({'success': False, 'message': 'Nom d\'utilisateur ou mot de passe incorrect.'})
 
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
     username = data.get('username', '').strip()
-    email = data.get('email', '').strip()
     password = data.get('password', '')
 
-    if not username or not email or not password:
+    if not username or not password:
         return jsonify({'success': False, 'message': 'Veuillez remplir tous les champs.'})
-
-    if User.query.filter_by(email=email).first():
-        return jsonify({'success': False, 'message': 'Cet email est déjà utilisé.'})
 
     if User.query.filter_by(username=username).first():
         return jsonify({'success': False, 'message': 'Ce nom d\'utilisateur est déjà pris.'})
 
     hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(username=username, email=email, password=hashed_pw, is_admin=False)
+    new_user = User(username=username, password=hashed_pw, is_admin=False)
     db.session.add(new_user)
     db.session.commit()
     login_user(new_user)
