@@ -323,3 +323,90 @@ footer {
     color: var(--text-muted);
     font-size: 0.9rem;
 }
+
+/* Navbar */
+.top-navbar {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem 0;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.nav-logo-img {
+    height: 35px;
+    width: auto;
+}
+
+.nav-brand {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.nav-auth {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-login, .btn-signup, .btn-pdf {
+    width: auto;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.btn-login {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-login:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.btn-signup {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-signup:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-pdf {
+    background: #e11d48;
+    color: white;
+    margin-top: 1rem;
+}
+
+.btn-pdf:hover {
+    background: #be123c;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(225, 29, 72, 0.3);
+}
+
+.main-logo {
+    height: 70px;
+    width: auto;
+    filter: drop-shadow(0 0 15px rgba(37, 99, 235, 0.4));
+}

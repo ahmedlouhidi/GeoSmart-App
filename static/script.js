@@ -79,7 +79,10 @@ function displayModule1Result(data) {
                 <strong>Le sol non renforcé est SÛR.</strong><br>
                 Aucun renforcement n'est requis. La conception est complète.
             </div>
-        </div>`;
+        </div>
+        <button class="btn-pdf" onclick="alert('Fonctionnalité en cours de développement : Génération et téléchargement du rapport complet en PDF.')">
+            <i class="fa-solid fa-file-pdf"></i> Télécharger le Rapport PDF
+        </button>`;
     }
 
     resArea.innerHTML = html;
@@ -171,6 +174,11 @@ function displayModule3Result(data) {
     if(data.plot_base64) {
         html += `<img src="data:image/png;base64,${data.plot_base64}" class="plot-image" alt="Courbe Charge-Tassement">`;
     }
+
+    html += `
+    <button class="btn-pdf" onclick="alert('Fonctionnalité en cours de développement : Génération et téléchargement du rapport complet en PDF avec graphiques IA.')">
+        <i class="fa-solid fa-file-pdf"></i> Télécharger le Rapport PDF
+    </button>`;
 
     resArea.innerHTML = html;
     resArea.classList.remove('hidden');
