@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIMBERIO - Conception des Fondations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <i class="fa-solid fa-layer-group logo-icon"></i>
+                <h1>RIMBERIO</h1>
+            </div>
+            <p class="subtitle">Plateforme Intelligente de Conception des Fondations SGR</p>
+        </header>
+
+        <main>
+            <!-- MODULE 1: Meyerhof -->
+            <section id="module1" class="module-card active">
+                <div class="card-header">
+                    <h2><span class="step-number">1</span> Sol Non Renforcé (Meyerhof)</h2>
+                </div>
+                
+                <form id="form-module1">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Cohésion du sol (C) <span class="unit">kPa</span></label>
+                            <input type="number" step="0.1" id="C" value="10" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Angle de frottement (φ) <span class="unit">deg</span></label>
+                            <input type="number" step="0.1" id="phi" value="30" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Poids volumique (γ) <span class="unit">kN/m³</span></label>
+                            <input type="number" step="0.1" id="gamma" value="15" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Largeur semelle (B) <span class="unit">m</span></label>
+                            <input type="number" step="0.1" id="B" value="2.0" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Longueur semelle (L) <span class="unit">m</span></label>
+                            <input type="number" step="0.1" id="L" value="2.0" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Prof. d'encastrement (Df) <span class="unit">m</span></label>
+                            <input type="number" step="0.1" id="Df" value="1.0" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Force structurale (F) <span class="unit">kN</span></label>
+                            <input type="number" step="0.1" id="F" value="3000" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Facteur de Sécurité (FS)</label>
+                            <input type="number" step="0.1" id="FS" value="3.0" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="btn-calc-m1">
+                        <i class="fa-solid fa-calculator"></i> Calculer la Capacité Portante
+                    </button>
+                </form>
+
+                <div id="result-module1" class="result-area hidden">
+                    <!-- Injected by JS -->
+                </div>
+            </section>
+
+            <!-- MODULE 3: SGR Optimization -->
+            <section id="module3" class="module-card hidden">
+                <div class="card-header warning">
+                    <h2><span class="step-number">2</span> Optimisation SGR par IA</h2>
+                    <p class="header-note">Renforcement requis car le sol naturel est insuffisant.</p>
+                </div>
+                
+                <form id="form-module3">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Raideur axiale géogrille (EA) <span class="unit">kN/m</span></label>
+                            <input type="number" step="0.1" id="EA" value="3000" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Tassement admissible (Uz) <span class="unit">mm</span></label>
+                            <input type="number" step="0.1" id="UZ_ALLOW" value="50" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-secondary" id="btn-calc-m3">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Lancer l'Optimisation IA
+                    </button>
+                </form>
+
+                <div id="loader" class="loader-container hidden">
+                    <div class="spinner"></div>
+                    <p>L'IA analyse des milliers de configurations (Algorithme Évolutionnaire)...</p>
+                </div>
+
+                <div id="result-module3" class="result-area hidden">
+                    <!-- Injected by JS -->
+                </div>
+            </section>
+
+        </main>
+        
+        <footer>
+            <p>Développé dans le cadre d'un mémoire de Master (Loi 1275) - Algérie.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
